@@ -6,19 +6,19 @@ from flask import jsonify, redirect, url_for, render_template
 from jinja2 import TemplateNotFound
 
 
-web = Blueprint('web', __name__, 
-                template_folder='app',
-                static_folder='app')
+web = Blueprint('web', __name__, static_folder='app', static_url_path='web/app', template_folder='app')
 
-@web.route('/')
-def index():
-    return render_template('index.html')
 
-@web.route('/app', defaults={'path': 'index.html'})
-@web.route('/app/<path:path>')
+@web.route('/', defaults={'path': 'index.html'})
+@web.route('/<path:path>')
 def source(path):
-    print(url_for('static_folder'))
-    return send_from_directory('', path)
+    if path == 'index.html' or path == 'login':
+        return render_template('index.html')
+    try:
+        return web.send_static_file(path)
+    except Exception as e:
+        return render_template('index.html')    
+    # return send_from_directory('web/app', path)
 
 
 

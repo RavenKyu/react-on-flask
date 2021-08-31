@@ -1,6 +1,5 @@
 # React On Flask
 This project is for user who wants to use `React` on `Python Flask`.
-
 ## Work Process
 ### Install and Build React Project
 ```sh
